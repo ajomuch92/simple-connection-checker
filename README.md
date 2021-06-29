@@ -2,6 +2,9 @@
 
 A simple package to check when the device is connected to internet.
 
+## Demo
+<img src="https://raw.githubusercontent.com/ajomuch92/simple-connection-checker/master/assets/demo.gif" width="200" height="429"/>
+
 ## Instalation
 Include `simple_connection_checker` in your `pubspec.yaml` file:
 
@@ -27,4 +30,4 @@ bool isConnected = await SimpleConnectionChecker.isConnectedToInternet();
 
 ```
 
-**Note**: You can pass an optional parameter named *lookUpAddress* to pass an especific URL to make the lookup operation and check the internet connection. By default, this value is *www.google.com*. Avoid to use the protocol on the URL passed (http:// or https://).
+**Note**: You can pass an optional parameter named *lookUpAddress* to pass an especific URL to make the lookup operation and check the internet connection. By default, this value is *www.google.com*. Do not use the protocol on the URL string passed (http:// or https://).
