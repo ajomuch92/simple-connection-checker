@@ -1,14 +1,30 @@
-# simple_connection_checker
+# Simple Connection Checker
 
-A new Flutter package project.
+A simple package to check when the device is connected to internet.
 
-## Getting Started
+## Instalation
+Include `simple_connection_checker` in your `pubspec.yaml` file:
 
-This project is a starting point for a Dart
-[package](https://flutter.dev/developing-packages/),
-a library module containing code that can be shared easily across
-multiple Flutter or Dart projects.
+```yaml
+dependencies:
+  flutter:
+    sdk: flutter
+  simple_connection_checker: version
+```
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+## Usage
+
+To use this package, just import it into your file and call the static method *isConnectedToInternet* as follows:
+
+```dart
+import 'package:simple_connection_checker/simple_connection_checker.dart';
+
+...
+
+bool isConnected = await SimpleConnectionChecker.isConnectedToInternet();
+
+...
+
+```
+
+**Note**: You can pass an optional parameter named *lookUpAddress* to pass an especific URL to make the lookup operation and check the internet connection.
