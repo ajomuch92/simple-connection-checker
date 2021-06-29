@@ -27,4 +27,4 @@ bool isConnected = await SimpleConnectionChecker.isConnectedToInternet();
 
 ```
 
-**Note**: You can pass an optional parameter named *lookUpAddress* to pass an especific URL to make the lookup operation and check the internet connection.
+**Note**: You can pass an optional parameter named *lookUpAddress* to pass an especific URL to make the lookup operation and check the internet connection. By default, this value is *www.google.com*. Avoid to use the protocol on the URL passed (http:// or https://).
