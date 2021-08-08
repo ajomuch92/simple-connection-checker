@@ -67,3 +67,6 @@ void dispose() {
 ```
 
 **Note**: Don't forget to cancel the subscription
+
+# Demo
+<img src="https://raw.githubusercontent.com/ajomuch92/simple-connection-checker/master/assets/demo-listen.gif" width="200" height="429"/>
