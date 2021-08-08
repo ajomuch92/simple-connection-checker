@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:simple_connection_checker/simple_connection_checker.dart';
 
@@ -40,7 +42,26 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   String _message = '';
+  StreamSubscription? subscription;
+  
+  @override
+  void initState() {
+    super.initState();
+    SimpleConnectionChecker _simpleConnectionChecker = SimpleConnectionChecker()
+      ..setDuration(Duration(seconds: 1))
+      ..setLookUpAddress('pub.dev');
+    subscription = _simpleConnectionChecker.onConnectionChange.listen((connected) {
+      setState(() {
+        _message = connected? 'Connected': 'Not connected';
+      });
+    });
+  }
 
+  @override
+  void dispose() {
+    subscription?.cancel();
+    super.dispose();
+  }
   
 
   @override
