@@ -43,13 +43,12 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   String _message = '';
   StreamSubscription? subscription;
+  SimpleConnectionChecker _simpleConnectionChecker = SimpleConnectionChecker()
+    ..setLookUpAddress('pub.dev');
   
   @override
   void initState() {
     super.initState();
-    SimpleConnectionChecker _simpleConnectionChecker = SimpleConnectionChecker()
-      ..setDuration(Duration(seconds: 1))
-      ..setLookUpAddress('pub.dev');
     subscription = _simpleConnectionChecker.onConnectionChange.listen((connected) {
       setState(() {
         _message = connected? 'Connected': 'Not connected';
