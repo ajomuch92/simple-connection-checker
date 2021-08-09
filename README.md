@@ -47,7 +47,6 @@ bool? _connected;
 void initState() {
   super.initState();
   SimpleConnectionChecker _simpleConnectionChecker = SimpleConnectionChecker()
-      ..setDuration(Duration(seconds: 1)) // Optional method to pass a duration for every checking loop
       ..setLookUpAddress('pub.dev'); //Optional method to pass the lookup string
   subscription = _simpleConnectionChecker.onConnectionChange.listen((connected) {
     setState(() {
