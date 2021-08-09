@@ -29,7 +29,7 @@ class SimpleConnectionChecker {
   String? _lookUpAddress;
 
   /// Value to indicate to timer the duration of every loop
-  Duration? _duration;
+  final Duration _duration = const Duration(milliseconds: 1500);
 
   /// Stream controller to emit a notifier when connection status changes
   final StreamController<bool> _streamController =
@@ -54,11 +54,6 @@ class SimpleConnectionChecker {
     };
   }
 
-  /// Method to set the duration to use on timer
-  void setDuration(Duration? duration) {
-    _duration = duration;
-  }
-
   /// Method to set the lookup address
   void setLookUpAddress(String? lookUpAddress) {
     _lookUpAddress = lookUpAddress;
@@ -77,9 +72,7 @@ class SimpleConnectionChecker {
 
     if (!_streamController.hasListener) return;
 
-    if (_duration == null) _duration = Duration(milliseconds: 3000);
-
-    _timerHandler = Timer(_duration!, _checkInternetStatus);
+    _timerHandler = Timer(_duration, _checkInternetStatus);
 
     _lastStatus = isConnected;
   }
