@@ -1,21 +1,24 @@
 library simple_connection_checker;
 
 import 'dart:async';
-import 'dart:io';
+import 'package:universal_io/io.dart';
 
 class SimpleConnectionChecker {
   /// Static method to check if it's connected to internet
   /// lookUpAddress: String to use as lookup address to check internet connection
   static Future<bool> isConnectedToInternet({String? lookUpAddress}) async {
+    if (lookUpAddress == null) {
+      lookUpAddress = 'www.google.com';
+    }
     try {
-      if (lookUpAddress == null) {
-        lookUpAddress = 'www.google.com';
-      }
       final result = await InternetAddress.lookup(lookUpAddress);
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) return true;
       return false;
     } on SocketException catch (_) {
       return false;
+    } catch (e) {
+      var connectOk = await _lookupDoH(lookUpAddress);
+      return connectOk;
     }
   }
 
@@ -65,7 +68,8 @@ class SimpleConnectionChecker {
     timer?.cancel();
 
     bool isConnected = await SimpleConnectionChecker.isConnectedToInternet(
-        lookUpAddress: _lookUpAddress);
+        lookUpAddress:
+            _lookUpAddress == null ? 'www.google.com' : _lookUpAddress);
 
     if (_lastStatus != isConnected && _streamController.hasListener)
       _streamController.add(isConnected);
@@ -75,5 +79,19 @@ class SimpleConnectionChecker {
     _timerHandler = Timer(_duration, _checkInternetStatus);
 
     _lastStatus = isConnected;
+  }
+
+  /// Utility to resolve DNS over HTTPs (DoH)
+  /// Credit: https://github.com/oonid/ntp/commit/40380ccc390a752788c24671171c35d4c000252a
+  static Future<bool> _lookupDoH(String host) async {
+    final httpClient = HttpClient();
+    final query = 'https://dns.google/resolve?name=$host&type=a&do=1';
+    final request = await httpClient.getUrl(Uri.parse(query));
+    final response = await request.close();
+    if (response.statusCode == 200) {
+      // HTTP OK
+      return true;
+    }
+    return false;
   }
 }
