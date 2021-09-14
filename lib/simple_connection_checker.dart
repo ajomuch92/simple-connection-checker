@@ -2,6 +2,7 @@ library simple_connection_checker;
 
 import 'dart:async';
 import 'package:universal_io/io.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class SimpleConnectionChecker {
   /// Static method to check if it's connected to internet
@@ -11,14 +12,17 @@ class SimpleConnectionChecker {
       lookUpAddress = 'www.google.com';
     }
     try {
-      final result = await InternetAddress.lookup(lookUpAddress);
-      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) return true;
-      return false;
+      if (kIsWeb) {
+        var connectOk = await _lookupDoH(lookUpAddress);
+        return connectOk;
+      } else {
+        //why is this final
+        final result = await InternetAddress.lookup(lookUpAddress);
+        if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) return true;
+        return false;
+      }
     } on SocketException catch (_) {
       return false;
-    } catch (e) {
-      var connectOk = await _lookupDoH(lookUpAddress);
-      return connectOk;
     }
   }
 
