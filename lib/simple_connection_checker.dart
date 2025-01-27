@@ -1,7 +1,7 @@
 library simple_connection_checker;
 
 import 'dart:async';
-import 'dart:io';
+import 'dart:io' show InternetAddress, SocketException;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:simple_connection_checker/web.dart';
 
