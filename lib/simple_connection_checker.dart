@@ -2,6 +2,9 @@ library simple_connection_checker;
 
 import 'dart:async';
 import 'dart:io';
+import 'dart:js' as js;
+
+import 'package:flutter/foundation.dart';
 
 class SimpleConnectionChecker {
   /// Static method to check if it's connected to internet
@@ -11,10 +14,25 @@ class SimpleConnectionChecker {
       if (lookUpAddress == null) {
         lookUpAddress = 'www.google.com';
       }
+      if (kIsWeb) {
+        return checkInternetConnectionWeb(lookUpAddress);
+      }
       final result = await InternetAddress.lookup(lookUpAddress);
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) return true;
       return false;
     } on SocketException catch (_) {
+      return false;
+    }
+  }
+
+  /// Private method to verify when there is internet connection for web, using the fetch method from JS
+  static Future<bool> checkInternetConnectionWeb(String url) async {
+    try {
+      await js.context.callMethod('fetch', [url]);
+      // If you get here, the connection was successful
+      return true;
+    } catch (e) {
+      // If an error occurs, there is no connection
       return false;
     }
   }
@@ -46,7 +64,7 @@ class SimpleConnectionChecker {
 
   /// Factory to init the class constructor
   SimpleConnectionChecker._() {
-    _streamController.onListen = () => {_checkInternetStatus()};
+    _streamController.onListen = () => _checkInternetStatus();
 
     _streamController.onCancel = () {
       _timerHandler?.cancel();
