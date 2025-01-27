@@ -1,6 +1,6 @@
 name: simple_connection_checker
 description: A simple package to check when the device is connected (connectivity) to internet. Also provide a method to listen for connection status changes.
-version: 0.3.2
+version: 0.3.3
 homepage: https://github.com/ajomuch92/simple-connection-checker
 
 environment:
