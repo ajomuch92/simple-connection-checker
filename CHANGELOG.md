@@ -11,3 +11,5 @@
 ## 0.3.0 5th release (27/01/2025) Adding support for web
 
 ## 0.3.1 6th release (27/01/2025) Fixing platform support
+
+## 0.3.2 7th release (27/01/2025) Fixing platform support v2
