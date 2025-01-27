@@ -15,3 +15,5 @@
 ## 0.3.2 7th release (27/01/2025) Fixing platform support v2
 
 ## 0.3.3 8th release (27/01/2025) Fixing platform support using the package http
+
+## 0.3.4 9th release (27/01/2025) Fixing small bugs for web
