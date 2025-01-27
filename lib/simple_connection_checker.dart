@@ -2,8 +2,8 @@ library simple_connection_checker;
 
 import 'dart:async';
 import 'dart:io';
-import 'dart:js' as js;
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:simple_connection_checker/web.dart';
 
 class SimpleConnectionChecker {
   /// Static method to check if it's connected to internet
@@ -21,18 +21,6 @@ class SimpleConnectionChecker {
         return false;
       }
     } on SocketException catch (_) {
-      return false;
-    }
-  }
-
-  /// Private method to verify when there is internet connection for web, using the fetch method from JS
-  static Future<bool> checkInternetConnectionWeb(String url) async {
-    try {
-      await js.context.callMethod('fetch', [url]);
-      // If you get here, the connection was successful
-      return true;
-    } catch (e) {
-      // If an error occurs, there is no connection
       return false;
     }
   }
